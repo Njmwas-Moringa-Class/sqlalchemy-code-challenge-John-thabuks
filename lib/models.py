@@ -14,7 +14,9 @@ engine = create_engine('sqlite:///db/restaurants.db', echo=True)
 # Creates the association table 
 restaurants_customers = Table('restaurants_customers', Base.metadata,
     Column('restaurant_id', Integer, ForeignKey('restaurants.id')),
-    Column('customer_id', Integer, ForeignKey('customers.id')))
+    Column('customer_id', Integer, ForeignKey('customers.id')),
+    extend_existing=True
+    )
 
 class Review(Base):
     __tablename__ = 'reviews'
@@ -50,6 +52,6 @@ class Customer(Base):
     restaurants = relationship("Restaurant", secondary=restaurants_customers, back_populates="customers")
 
     def __repr__(self):
-        return f'Customer: {self.name}'
+        return f'Customer: {self.first_name}'
 
 
