@@ -1,0 +1,10 @@
+[
+  {
+    "type": "sqlite",
+    "path": "/home/thabuks/Development/code/phases_3/sqlalchemy-code-challenge-John-thabuks/lib/db/restaurants.db"
+  },
+  {
+    "type": "sqlite",
+    "path": "/home/thabuks/Development/code/phases_3/sqlalchemy-code-challenge-John-thabuks/lib/restaurants.db"
+  }
+]
