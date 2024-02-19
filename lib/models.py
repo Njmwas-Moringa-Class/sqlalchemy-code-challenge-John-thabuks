@@ -41,18 +41,18 @@ class Restaurant(BASE):
         return review_list
     
     #returns a list of all the reviews for the Restaurant
-    def reviews(self):
-        return self.reviews
+    # def reviews(self):
+    #     return self.reviews
     #returns a list of all the customers who reviewed the Restaurant
     #Lets first have all the reviews in our Restaurant
     #Out of those all those revies, lets search for customers who reviews the restaurant.
-    def customers(self):
-        all_customers = []
-        restaurant_reviews = self.reviews
-        for rest in restaurant_reviews:
-            if rest not in all_customers:
-                all_customers.append(rest.customer)
-        return all_customers
+    # def customers(self):
+    #     all_customers = []
+    #     restaurant_reviews = self.reviews
+    #     for rest in restaurant_reviews:
+    #         if rest not in all_customers:
+    #             all_customers.append(rest.customer)
+    #     return all_customers
 
     #returns one restaurant instance for the restaurant that has the highest price
     @classmethod
@@ -95,25 +95,26 @@ class Customer(BASE):
         session.commit()
 
     #return a list of all the reviews that the Customer has left
-    def reviews(self):
-        return self.reviews
+    # def reviews(self):
+    #     return self.reviews
     
     #return a list of all the restaurants that the Customer has reviewed
-    def restaurants(self):
-        all_restaurants = []
-        all_reviews = self.reviews
+    # def restaurants(self):
+    #     all_restaurants = []
+    #     all_reviews = self.reviews
 
-        for rest in all_reviews:
-            all_restaurants.append(rest.restaurant)
-        return all_restaurants
+    #     for rest in all_reviews:
+    #         all_restaurants.append(rest.restaurant)
+    #     return all_restaurants
 
     #removes all their reviews for this restaurant
     #delete rows from the reviews table
     def delete_reviews(self, restaurant):
         access_unique_key = [review.id for review in restaurant.reviews]
         if access_unique_key:
-            item_deleted = delete(Review).where(Review.id.in_(access_unique_key))
-            session.execute(item_deleted)
+            rev = session.get(Review, access_unique_key)
+            # item_deleted = delete(Review).where(Review.id.in_(access_unique_key))
+            session.delete(rev)
             session.commit()
 
 
@@ -144,14 +145,14 @@ class Review(BASE):
 
     #should return the Restaurant instance for this review
     #Restaurant has the virtual restaurant which is in Review.
-    def restaurant(self):
-        return self.restaurant
+    # def restaurant(self):
+    #     return self.restaurant
 
     #return a string formatted as follows
     def full_review(self):
         #Review for {insert restaurant name} by {insert customer's full name}: {insert review star_rating} stars.
         restaurant_name = self.restaurant.name
-        customer_full_name =f"{self.first_name} {self.last_name}"
+        customer_full_name =f"{self.customer.first_name} {self.customer.last_name}"
         rating = self.star_rating
         return f"Review for {restaurant_name} by {customer_full_name}: {rating} stars."
 
